@@ -1,12 +1,19 @@
 package controller;
 
 
-import javax.swing.JOptionPane;
+import java.io.IOException;
 
+import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import persistence.InputOutputXML;
 import view.ConsoleView;
 import view.LoginView;
 import view.MenuView;
 import view.MyView;
+import view.mainSnake;
 
 public class Controller {
 
@@ -15,6 +22,7 @@ public class Controller {
 	 private ConsoleView console;
 	 private LoginView login;
 	 private MenuView menu;
+	 private mainSnake snake;
 	 
 	 
 	 //Controller inits the initial view (SplitView with JPanel left and Jpanel right)
@@ -34,11 +42,17 @@ public class Controller {
 	}
 	 
 	 public void checkLogin() {
+		 try {
 		 String name = login.getsName().getText();
 		 String pass = login.getPassword().getText();
-		 //JOptionPane.showMessageDialog(null, name, "Info", JOptionPane.INFORMATION_MESSAGE);
+		 boolean b = InputOutputXML.loginCheck(name, pass);
+		 
 		 menu = new MenuView();
 		 switchToMenu();
+		 }catch(IOException | ParserConfigurationException | SAXException e) {
+			 JOptionPane.showMessageDialog(null, "name", "Info", JOptionPane.INFORMATION_MESSAGE);
+			 e.getMessage();
+		 }
 	 }
 	 
 	 /**
@@ -52,7 +66,8 @@ public class Controller {
 	 }
 	 
 	 public void newGame() {
-		 
+		 snake = new mainSnake();
+		 view.setGame(snake);
 	 }
 	 
 	 public void scores() {

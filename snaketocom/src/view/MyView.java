@@ -46,6 +46,12 @@ public class MyView {
 		//panel.getSplitPane().invalidate();
 	}
 	
+	//Esto no chuta
+	public void setGame(mainSnake s) {
+		panel.getSplitPane().setRightComponent(s);
+		panel.getSplitPane().setDividerLocation(200);
+	}
+	
 	/*
 	public void setConsole(ConsoleView c) {
 	   // panel.getSplitPane().setLeftComponent(c);
