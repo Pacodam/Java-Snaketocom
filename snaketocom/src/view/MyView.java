@@ -40,7 +40,10 @@ public class MyView {
    }
 	
 	public void setMenu(MenuView m) {
+		
 		panel.getSplitPane().setRightComponent(m);
+		panel.getSplitPane().setDividerLocation(200);
+		//panel.getSplitPane().invalidate();
 	}
 	
 	/*

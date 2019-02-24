@@ -30,4 +30,24 @@ public class MenuView extends JPanel {
 		btnNewButton_2.setBounds(311, 226, 89, 23);
 		add(btnNewButton_2);
 	}
+	public JButton getNewGame() {
+		return newGame;
+	}
+	public void setNewGame(JButton newGame) {
+		this.newGame = newGame;
+	}
+	public JButton getScores() {
+		return scores;
+	}
+	public void setScores(JButton scores) {
+		this.scores = scores;
+	}
+	public JButton getExit() {
+		return exit;
+	}
+	public void setExit(JButton exit) {
+		this.exit = exit;
+	}
+	
+	
 }

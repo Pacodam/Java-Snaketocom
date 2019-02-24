@@ -25,7 +25,7 @@ public class MyPanel extends JPanel {
 	public MyPanel(ConsoleView consoleView, LoginView loginView) {
 		setLayout(null);
 		
-		JSplitPane splitPane = new JSplitPane();
+		splitPane = new JSplitPane();
 		splitPane.setBounds(0, 0, 900, 600);
 		splitPane.setForeground(Color.GRAY);
 		splitPane.setDividerLocation(200);
@@ -54,6 +54,7 @@ public class MyPanel extends JPanel {
 		lblNewLabel_1.setBounds(89, 27, 172, 14);
 		panelR.add(lblNewLabel_1);
 		*/
+		//splitPane.setRightComponent(new MenuView());
 		splitPane.setRightComponent(loginView);
 		splitPane.setLeftComponent(consoleView);
 		/*
@@ -80,9 +81,13 @@ public class MyPanel extends JPanel {
 	}
 	
 	
+	
+	
+	
 	public void setLoginView(LoginView l) {
+		splitPane.setRightComponent(null);
 		splitPane.setRightComponent(l);
-	}
+	} 
 	
 	
 	public JSplitPane getSplitPane() {

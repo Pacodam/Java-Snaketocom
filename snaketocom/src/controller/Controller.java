@@ -17,7 +17,7 @@ public class Controller {
 	 private MenuView menu;
 	 
 	 
-	 //Controller inits the initial view
+	 //Controller inits the initial view (SplitView with JPanel left and Jpanel right)
 	 public Controller() {
 	   console = new ConsoleView();
 	   login = new LoginView();
@@ -27,7 +27,7 @@ public class Controller {
 	 }
 	 
 	 /**
-	  * The listeners of the actual view
+	  * The listeners of the login view
 	  */
 	 public void initController() {
 		login.getLoginButton().addActionListener(e -> checkLogin()); 
@@ -41,7 +41,25 @@ public class Controller {
 		 switchToMenu();
 	 }
 	 
+	 /**
+	  * Init menu and listeners
+	  */
 	 public void switchToMenu() {
 		 view.setMenu(menu);
+		 menu.getNewGame().addActionListener(e -> newGame());
+		 menu.getScores().addActionListener(e -> scores());
+		 menu.getExit().addActionListener(e -> exit()); 
+	 }
+	 
+	 public void newGame() {
+		 
+	 }
+	 
+	 public void scores() {
+		 
+	 }
+	 
+	 public void exit() {
+		 
 	 }
 }
