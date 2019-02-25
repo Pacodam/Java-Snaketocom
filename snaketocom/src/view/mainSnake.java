@@ -11,7 +11,7 @@ public class mainSnake extends JFrame {
     
     private void initUI() {
         
-        add(new Snake());
+       add(new Snake());
                
         setResizable(false);
         pack();

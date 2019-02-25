@@ -47,8 +47,13 @@ public class MyView {
 	}
 	
 	//Esto no chuta
-	public void setGame(mainSnake s) {
+	public void setGame(Snake s) {
 		panel.getSplitPane().setRightComponent(s);
+		panel.getSplitPane().setDividerLocation(200);
+	}
+	
+	public void setLogin(LoginView l) {
+		panel.getSplitPane().setRightComponent(l);
 		panel.getSplitPane().setDividerLocation(200);
 	}
 	

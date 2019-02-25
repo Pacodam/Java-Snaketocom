@@ -21,16 +21,16 @@ public class LoginView extends JPanel {
 		setLayout(null);
 		
 		name = new JTextField();
-		name.setBounds(244, 156, 284, 20);
+		name.setBounds(124, 174, 479, 40);
 		add(name);
 		name.setColumns(10);
 		
 		password = new JPasswordField();
-		password.setBounds(257, 271, 284, 20);
+		password.setBounds(124, 232, 479, 40);
 		add(password);
 		
 		loginButton = new JButton("Login");
-		loginButton.setBounds(340, 387, 57, 23);
+		loginButton.setBounds(305, 335, 101, 23);
 		add(loginButton);
 		
 	}

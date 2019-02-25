@@ -15,6 +15,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import exceptions.SnakeExceptions;
+import model.User;
+
 
 
 
@@ -30,13 +33,12 @@ public class InputOutputXML {
 	private static org.w3c.dom.Document doc;
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	
+	//m.setTime(LocalDateTime.parse(n.getAttributes().getNamedItem("fechahora").getNodeValue(), formatter));
 	
-	
-	 public static boolean loginCheck(String name, String pass) throws ParserConfigurationException, SAXException, IOException{
+	 public static User doLogin(String name, String pass) throws ParserConfigurationException, SAXException, IOException, SnakeExceptions{
 	       
-		    String n = null;
-		    String p = null;
-	        int i, j = 0;
+		    User user = null;
+	        int i = 0;
 		 
             //initial elements
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -51,16 +53,17 @@ public class InputOutputXML {
             for(i = 0; i < child.getLength(); i++) {
                 Node actualItem = child.item(i);
                 if(actualItem.getNodeType() == Node.ELEMENT_NODE){
-                 
-                    //transformation of String into localDateTime:
+                    
                     Element e = (Element)actualItem;
-                    n = e.getAttribute("name");
-                    p = e.getAttribute("psw");
-                    System.out.println(n);
-                    System.out.println(p);
+                    if(e.getAttribute("name").equals(name) && e.getAttribute("psw").contentEquals(pass)) {
+                      return new User(e.getAttribute("name"), e.getAttribute("psw"));
+                    }
                  }
             }
-        return true;
+            if(user == null) {
+            	throw new SnakeExceptions(SnakeExceptions.WRONG_LOGIN);
+            }
+          return null;
 	    } 
 	   
 }

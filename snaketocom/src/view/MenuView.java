@@ -4,12 +4,14 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 public class MenuView extends JPanel {
 
 	private JButton newGame;
 	private JButton scores;
 	private JButton exit;
+	private JTable table;
 	/**
 	 * Create the panel.
 	 */
@@ -18,17 +20,21 @@ public class MenuView extends JPanel {
 		setBackground(Color.GREEN);
 		setLayout(null);
 		
-		JButton btnNewButton = new JButton("New game");
-		btnNewButton.setBounds(36, 226, 89, 23);
-		add(btnNewButton);
+		newGame = new JButton("New game");
+		newGame.setBounds(74, 405, 169, 36);
+		add(newGame);
 		
-		JButton btnNewButton_1 = new JButton("Scores");
-		btnNewButton_1.setBounds(172, 226, 89, 23);
-		add(btnNewButton_1);
+		scores = new JButton("Scores");
+		scores.setBounds(331, 405, 89, 36);
+		add(scores);
 		
-		JButton btnNewButton_2 = new JButton("Exit");
-		btnNewButton_2.setBounds(311, 226, 89, 23);
-		add(btnNewButton_2);
+		exit = new JButton("Exit");
+		exit.setBounds(496, 405, 89, 36);
+		add(exit);
+		
+		table = new JTable();
+		table.setBounds(519, 353, -381, -250);
+		add(table);
 	}
 	public JButton getNewGame() {
 		return newGame;
@@ -48,6 +54,4 @@ public class MenuView extends JPanel {
 	public void setExit(JButton exit) {
 		this.exit = exit;
 	}
-	
-	
 }
