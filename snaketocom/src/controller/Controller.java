@@ -2,6 +2,7 @@ package controller;
 
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import exceptions.SnakeExceptions;
+import model.Score;
 import model.User;
 import persistence.InputOutputXML;
 import view.ConsoleView;
@@ -16,7 +18,7 @@ import view.LoginView;
 import view.MenuView;
 import view.MyView;
 import view.Snake;
-import view.mainSnake;
+
 
 public class Controller {
 
@@ -56,6 +58,9 @@ public class Controller {
 		 
 	 }
 	 
+	 /**
+	  * 
+	  */
 	 public void consoleMenuOptions() {
 		 System.out.println("pressed");
 	 }
@@ -67,6 +72,9 @@ public class Controller {
 		login.getLoginButton().addActionListener(e -> login()); 
 	}
 	 
+	 /**
+	  * 
+	  */
 	 public void login() {
 		 try {
 			 String name = login.getsName().getText();
@@ -94,6 +102,9 @@ public class Controller {
 		 menu.getExit().addActionListener(e -> exit()); 
 	 }
 	 
+	 /**
+	  * 
+	  */
 	 public void switchToLogin() {
 		 login = new LoginView();
 		 view.setLogin(login);
@@ -106,12 +117,24 @@ public class Controller {
 	 public void newGame() {
 		 snake = new Snake();
 		 view.setGame(snake);
-	 }
-	 
-	 public void scores() {
 		 
 	 }
 	 
+	 /**
+	  * 
+	  */
+	 public void scores() {
+		try {
+			List<Score> scores = InputOutputXML.getUserScores(userLogged);
+		} catch (SnakeExceptions | ParserConfigurationException | SAXException | IOException e) {
+			JOptionPane.showMessageDialog(null, e, "Info", JOptionPane.INFORMATION_MESSAGE);
+			
+		}  
+	 }
+	 
+	 /**
+	  * 
+	  */
 	 public void exit() {
 		 
 	 }

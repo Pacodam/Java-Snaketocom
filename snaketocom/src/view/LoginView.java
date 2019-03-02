@@ -17,6 +17,7 @@ public class LoginView extends JPanel {
 	public LoginView() {
 
 		
+		setBounds(0, 0, 700, 600);
 		setBackground(Color.ORANGE);
 		setLayout(null);
 		

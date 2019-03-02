@@ -19,6 +19,40 @@ public class User {
 	public void setScoresHistory(ArrayList<Score> scores) {
 		this.scoresHistory = scores;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Score> getScoresHistory() {
+		return scoresHistory;
+	}
+
+	public void setScoresHistory(List<Score> scoresHistory) {
+		this.scoresHistory = scoresHistory;
+	}
+
+	public List<Score> getNewScores() {
+		return newScores;
+	}
+
+	public void setNewScores(List<Score> newScores) {
+		this.newScores = newScores;
+	}
+	
+	
 	
 	
 }

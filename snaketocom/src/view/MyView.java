@@ -50,7 +50,8 @@ public class MyView {
 	public void setGame(Snake s) {
 		panel.getSplitPane().setRightComponent(s);
 		panel.getSplitPane().setDividerLocation(200);
-	}
+		s.requestFocus();	
+		}
 	
 	public void setLogin(LoginView l) {
 		panel.getSplitPane().setRightComponent(l);

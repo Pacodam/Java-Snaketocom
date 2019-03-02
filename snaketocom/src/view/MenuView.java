@@ -17,6 +17,7 @@ public class MenuView extends JPanel {
 	 */
 	public MenuView() {
 
+		setBounds(0, 0, 700, 600);
 		setBackground(Color.GREEN);
 		setLayout(null);
 		

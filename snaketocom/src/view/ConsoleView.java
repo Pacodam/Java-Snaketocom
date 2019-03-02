@@ -89,5 +89,7 @@ public class ConsoleView extends JPanel {
 		return pop3;
 	}
 	
+	//usar JmenuBar y JmenuItem
+	
 	
 }
