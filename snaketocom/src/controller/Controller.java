@@ -18,6 +18,7 @@ import view.LoginView;
 import view.MenuView;
 import view.MyView;
 import view.Snake;
+import view.TableData;
 
 
 public class Controller {
@@ -45,17 +46,17 @@ public class Controller {
 	  * Listener of popup menu in console view
 	  */
 	 public void initConsole() {
-	   console.getPop1().addActionListener(e -> {
-		try {
-			switchToMenu();
-		} catch (SnakeExceptions e1) {
-			JOptionPane.showMessageDialog(null, e1, "Info", JOptionPane.INFORMATION_MESSAGE);
-			e1.getMessage();	
-		}
-	  });
-	  console.getPop2().addActionListener(e -> switchToLogin());
-	  console.getPop3().addActionListener(e -> exit());
-		 
+		
+	    console.getItem1().addActionListener(e -> {
+			try {
+				switchToMenu();
+			} catch (SnakeExceptions e1) {
+				
+				e1.printStackTrace();
+			}
+		});
+	    console.getItem2().addActionListener(e -> switchToLogin());
+	    console.getItem3().addActionListener(e -> exit());
 	 }
 	 
 	 /**
@@ -80,6 +81,7 @@ public class Controller {
 			 String name = login.getsName().getText();
 			 String pass = login.getPassword().getText();
 			 userLogged = InputOutputXML.doLogin(name, pass);
+			 System.out.println(userLogged.getName());
 			 menu = new MenuView();
 			 switchToMenu();
 			 }catch(IOException | ParserConfigurationException | SAXException | SnakeExceptions e) {
@@ -97,6 +99,18 @@ public class Controller {
 			throw new SnakeExceptions(SnakeExceptions.MENU_NOT_ALLOWED);
 		}
 		 view.setMenu(menu);
+		 
+			try {
+				List<Score> scores = InputOutputXML.getUserScores(userLogged);
+				 for(Score s: scores){
+		        	 System.out.println(s.toString());
+		         } 
+				TableData td = new TableData(scores);
+				menu.setDataModel(td);
+			} catch (SnakeExceptions | ParserConfigurationException | SAXException | IOException e) {
+				JOptionPane.showMessageDialog(null, e, "Info", JOptionPane.INFORMATION_MESSAGE);
+				
+			}  
 		 menu.getNewGame().addActionListener(e -> newGame());
 		 menu.getScores().addActionListener(e -> scores());
 		 menu.getExit().addActionListener(e -> exit()); 
@@ -124,12 +138,7 @@ public class Controller {
 	  * 
 	  */
 	 public void scores() {
-		try {
-			List<Score> scores = InputOutputXML.getUserScores(userLogged);
-		} catch (SnakeExceptions | ParserConfigurationException | SAXException | IOException e) {
-			JOptionPane.showMessageDialog(null, e, "Info", JOptionPane.INFORMATION_MESSAGE);
-			
-		}  
+		
 	 }
 	 
 	 /**

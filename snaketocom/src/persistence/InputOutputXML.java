@@ -104,7 +104,7 @@ public class InputOutputXML {
 	                             case "time":
 	                            	 dateTime = LocalDateTime.parse(contenido, formatter);
 	                                break;
-	                             case "score":
+	                             case "points":
 	                                 score = contenido;     
 	                           }
 	                       }

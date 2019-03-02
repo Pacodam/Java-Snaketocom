@@ -1,93 +1,88 @@
 package view;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenuItem;
 
 public class ConsoleView extends JPanel {
 	
-	private JPopupMenu popupMenu;
-	private JMenuItem pop1;
-	private JMenuItem pop2;
-	private JMenuItem pop3;
+	private JMenu menuBar;
+	private JMenuItem item1;
+	private JMenuItem item2;
+	private JMenuItem item3;
+
+	
 	/**
 	 * Create the panel.
 	 */
 	public ConsoleView() {
 		
-		addMouseListener(new MouseAdapter() {
+		
+		//setLayout(null);
+		
+		menuBar = new JMenu("Program");
+		menuBar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println("ff");
-				popupMenu.show(e.getComponent(), e.getX(), e.getY());
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				System.out.println("eee");
+			public void mouseEntered(MouseEvent arg0) {
 			}
 		});
+		add(menuBar);
 		
+		/*
+		menuBar = new JMenuBar();
+		add(menuBar); */
 		
+	    item1 = new JMenuItem("MENU");
+		menuBar.add(item1);
 		
+		item2 = new JMenuItem("LOGOUT");
+		menuBar.add(item2);
 		
-		popupMenu = new JPopupMenu();
-		popupMenu.setBounds(0, 0, 122, 16);
-		popupMenu.setToolTipText("");
-		popupMenu.setLabel("");
-		addPopup(this, popupMenu);
+		item3 = new JMenuItem("EXIT");
+		menuBar.add(item3);
 		
-		
-	    pop1 = new JMenuItem("MENU");
-		popupMenu.add(pop1);
-		
-	    pop2 = new JMenuItem("LOGOUT");
-		popupMenu.add(pop2);
-		
-		pop3 = new JMenuItem("EXIT");
-		popupMenu.add(pop3);
-		setLayout(null);
-			
-		
+	}
+
+	public JMenu getMenuBar() {
+		return menuBar;
+	}
+
+	public void setMenuBar(JMenu menuBar) {
+		this.menuBar = menuBar;
+	}
+
+	public JMenuItem getItem1() {
+		return item1;
+	}
+
+	public void setItem1(JMenuItem item1) {
+		this.item1 = item1;
+	}
+
+	public JMenuItem getItem2() {
+		return item2;
+	}
+
+	public void setItem2(JMenuItem item2) {
+		this.item2 = item2;
+	}
+
+	public JMenuItem getItem3() {
+		return item3;
+	}
+
+	public void setItem3(JMenuItem item3) {
+		this.item3 = item3;
 	}
 	
+	
+	
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
+	
 
-	public JMenuItem getPop1() {
-		return pop1;
-	}
 
-	public JMenuItem getPop2() {
-		return pop2;
-	}
-
-	public JMenuItem getPop3() {
-		return pop3;
-	}
 	
 	//usar JmenuBar y JmenuItem
 	

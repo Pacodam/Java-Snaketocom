@@ -18,6 +18,24 @@ public class Score {
 	  this.points = points;
 	  this.time = LocalDateTime.now();
   }
+  
+  
+
+public LocalDateTime getTime() {
+	return time;
+}
+
+public void setTime(LocalDateTime time) {
+	this.time = time;
+}
+
+public String getPoints() {
+	return points;
+}
+
+public void setPoints(String points) {
+	this.points = points;
+}
 
 @Override
 public String toString() {

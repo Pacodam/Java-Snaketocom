@@ -1,10 +1,14 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.JLabel;
 
 public class MenuView extends JPanel {
 
@@ -12,6 +16,9 @@ public class MenuView extends JPanel {
 	private JButton scores;
 	private JButton exit;
 	private JTable table;
+	private JScrollPane scrollPane;
+	
+	
 	/**
 	 * Create the panel.
 	 */
@@ -33,9 +40,18 @@ public class MenuView extends JPanel {
 		exit.setBounds(496, 405, 89, 36);
 		add(exit);
 		
+		JLabel lblNewLabel = new JLabel("Your Best Plays");
+		lblNewLabel.setBounds(97, 71, 222, 36);
+		add(lblNewLabel);
+		
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(74, 131, 511, 176);
+		add(scrollPane);
+		
 		table = new JTable();
-		table.setBounds(519, 353, -381, -250);
-		add(table);
+		scrollPane.setViewportView(table); 
+			
 	}
 	public JButton getNewGame() {
 		return newGame;
@@ -55,4 +71,12 @@ public class MenuView extends JPanel {
 	public void setExit(JButton exit) {
 		this.exit = exit;
 	}
+	
+	public void setDataModel(TableData td) {
+		table.setModel(td);
+	}
+	
+	
+		
+	
 }
