@@ -52,6 +52,10 @@ public class User {
 		this.newScores = newScores;
 	}
 	
+	public void addNewScore(Score newScore) {
+		this.newScores.add(newScore);
+	}
+	
 	
 	
 	

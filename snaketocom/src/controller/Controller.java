@@ -19,6 +19,7 @@ import view.MenuView;
 import view.MyView;
 import view.Snake;
 import view.TableData;
+import utils.Events;
 
 
 public class Controller {
@@ -83,6 +84,7 @@ public class Controller {
 			 userLogged = InputOutputXML.doLogin(name, pass);
 			 System.out.println(userLogged.getName());
 			 menu = new MenuView();
+			 console.setTextEvent(Events.LOGIN + " " + userLogged.getName());
 			 switchToMenu();
 			 }catch(IOException | ParserConfigurationException | SAXException | SnakeExceptions e) {
 				 JOptionPane.showMessageDialog(null, e, "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -112,7 +114,7 @@ public class Controller {
 				
 			}  
 		 menu.getNewGame().addActionListener(e -> newGame());
-		 menu.getScores().addActionListener(e -> scores());
+		 menu.getScores().addActionListener(e -> switchToScores());
 		 menu.getExit().addActionListener(e -> exit()); 
 	 }
 	 
@@ -130,14 +132,30 @@ public class Controller {
 	  */
 	 public void newGame() {
 		 snake = new Snake();
+		 console.setTextEvent(Events.NEW_GAME);
 		 view.setGame(snake);
-		 
+		 snake.getPlayAgain().addActionListener(e -> {
+	     addNewScore(snake.getScore());
+		 newGame();
+		 });
+		 snake.goMenu().addActionListener(e -> {
+			try {
+				switchToMenu();
+			} catch (SnakeExceptions e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}); 
+	 }
+	 
+	 public void addNewScore(String newScore) {
+		 //userLogged.addNewScore(new Score());
 	 }
 	 
 	 /**
 	  * 
 	  */
-	 public void scores() {
+	 public void switchToScores() {
 		
 	 }
 	 

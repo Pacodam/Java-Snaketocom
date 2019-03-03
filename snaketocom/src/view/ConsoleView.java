@@ -2,16 +2,22 @@ package view;
 
 import javax.swing.JPanel;
 import javax.swing.JMenuItem;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class ConsoleView extends JPanel {
 	
+	private StringBuilder sb = new StringBuilder();
 	private JMenu menuBar;
 	private JMenuItem item1;
 	private JMenuItem item2;
 	private JMenuItem item3;
+	private JLabel eventsArea;
+	private JScrollPane scrollPane;
 
 	
 	/**
@@ -19,15 +25,20 @@ public class ConsoleView extends JPanel {
 	 */
 	public ConsoleView() {
 		
-		
+		setBounds(0,0,200,600);
 		//setLayout(null);
 		
 		menuBar = new JMenu("Program");
+		menuBar.setBounds(10, 11, 95, 22);
 		menuBar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 			}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+			}
 		});
+		setLayout(null);
 		add(menuBar);
 		
 		/*
@@ -42,6 +53,13 @@ public class ConsoleView extends JPanel {
 		
 		item3 = new JMenuItem("EXIT");
 		menuBar.add(item3);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 44, 200, 556);
+		add(scrollPane);
+		
+		eventsArea = new JLabel();
+		scrollPane.setViewportView(eventsArea);
 		
 	}
 
@@ -76,15 +94,14 @@ public class ConsoleView extends JPanel {
 	public void setItem3(JMenuItem item3) {
 		this.item3 = item3;
 	}
-	
-	
-	
 
 	
-
-
 	
-	//usar JmenuBar y JmenuItem
+	public void setTextEvent(String event) {
+		sb.append(event + "\n");
+		eventsArea.setText(sb.toString());
+	}
+
 	
 	
 }

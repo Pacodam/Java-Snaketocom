@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -40,6 +41,13 @@ public class Snake extends JPanel implements ActionListener {
     private Image ball;
     private Image apple;
     private Image head;
+    
+    //additions
+    private String score = "0000000000";
+    private int points = 0;
+    private JButton playAgain = new JButton("Try again");
+    private JButton goMenu = new JButton("Return to menu");
+    
 
     public Snake() {
         
@@ -96,7 +104,9 @@ public class Snake extends JPanel implements ActionListener {
         if (inGame) {
 
             g.drawImage(apple, apple_x, apple_y, this);
-
+            //the score
+            score(g);
+            
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
                     g.drawImage(head, x[z], y[z], this);
@@ -122,6 +132,12 @@ public class Snake extends JPanel implements ActionListener {
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        
+        playAgain.setBounds(331, 405, 89, 36);
+		add(playAgain);
+		
+		goMenu.setBounds(74, 405, 169, 36);
+		add(goMenu);
     }
 
     private void checkApple() {
@@ -129,8 +145,43 @@ public class Snake extends JPanel implements ActionListener {
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
 
             dots++;
+            updatePoints();
             locateApple();
         }
+    }
+    
+    /**
+     * Points manager
+     */
+    private void updatePoints() {
+    	points += 500;
+    	scoreConstructor(Integer.toString(points).length());
+    }
+    
+    /**
+     * Score constructor
+     */
+    private void scoreConstructor(int p) {
+    	StringBuilder sb = new StringBuilder();
+    	int zerosNum = 10 - p;
+    	for(int i = 0; i < zerosNum; i++) {
+    		sb.append("0");
+    		System.out.println(sb.toString());
+    	}
+    	sb.append(Integer.toString(points));
+    	score = sb.toString();
+    	System.out.println(sb.toString());
+    }
+    
+    /**
+     * Score draw
+     */
+    private void score(Graphics g) {
+    	Font small = new Font("Helvetica", Font.BOLD, 24);
+        FontMetrics metr = getFontMetrics(small);
+        g.setColor(Color.red);
+        //g.drawString(score, (B_WIDTH - metr.stringWidth(score)) / 2, B_HEIGHT / 2 );
+        g.drawString(score, 20, 40);
     }
 
     private void move() {
@@ -241,4 +292,20 @@ public class Snake extends JPanel implements ActionListener {
             }
         }
     }
+
+	public String getScore() {
+		return score;
+	}
+
+	public JButton getPlayAgain() {
+		return playAgain;
+	}
+	
+	public JButton goMenu() {
+		return goMenu;
+	}
+
+	
+    
+    
 }
