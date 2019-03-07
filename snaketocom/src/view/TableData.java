@@ -39,7 +39,7 @@ public class TableData extends AbstractTableModel {
 
 	            switch(columnIndex){
 	                case 0:
-	                    return score.getTime().toString();
+	                    return score.getTimeString();
 	                case 1:
 	                    return score.getPoints();
 	            }

@@ -11,14 +11,13 @@ import javax.swing.JScrollPane;
 
 public class ConsoleView extends JPanel {
 	
-	private StringBuilder sb = new StringBuilder();
+	private StringBuilder sb;
 	private JMenu menuBar;
 	private JMenuItem item1;
 	private JMenuItem item2;
 	private JMenuItem item3;
-	private JLabel eventsArea;
 	private JScrollPane scrollPane;
-
+    private JTextArea textArea;
 	
 	/**
 	 * Create the panel.
@@ -54,13 +53,14 @@ public class ConsoleView extends JPanel {
 		item3 = new JMenuItem("EXIT");
 		menuBar.add(item3);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 44, 200, 556);
+	    scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 36, 200, 385);
 		add(scrollPane);
 		
-		eventsArea = new JLabel();
-		scrollPane.setViewportView(eventsArea);
-		
+	    textArea = new JTextArea();
+	    textArea.isEditable();
+		scrollPane.setViewportView(textArea);
+	
 	}
 
 	public JMenu getMenuBar() {
@@ -94,14 +94,15 @@ public class ConsoleView extends JPanel {
 	public void setItem3(JMenuItem item3) {
 		this.item3 = item3;
 	}
-
 	
 	
 	public void setTextEvent(String event) {
-		sb.append(event + "\n");
-		eventsArea.setText(sb.toString());
+		//sb.append(event + "\n");
+		//textArea.setText(sb.toString());
 	}
-
 	
-	
+	public void initEvents() {
+		sb = new StringBuilder();
+        textArea.removeAll();
+	}
 }

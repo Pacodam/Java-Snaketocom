@@ -6,21 +6,28 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class ScoresView extends JPanel {
 
+	JTabbedPane tabbedPane;
+	JPanel tab1;
+	JPanel tab2;
 	/**
 	 * Create the panel.
 	 */
 	public ScoresView() {
 		setLayout(null);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 741, 510);
+	    tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		tabbedPane.setBounds(10, 11, 741, 510);
 		add(tabbedPane);
         
-		 tabbedPane.addTab("Tab1", makePanel("This is tab 1"));
+		tab1 = new JPanel();
+		 tabbedPane.addTab("tab1", tab1);
 	      tabbedPane.addTab("Tab2", makePanel("This is tab 2"));
 
 		

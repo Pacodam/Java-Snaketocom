@@ -58,6 +58,11 @@ public class MyView {
 		panel.getSplitPane().setDividerLocation(200);
 	}
 	
+	public void setScores(ScoresView s) {
+		panel.getSplitPane().setRightComponent(s);
+		panel.getSplitPane().setDividerLocation(200);
+	}
+	
 	/*
 	public void setConsole(ConsoleView c) {
 	   // panel.getSplitPane().setLeftComponent(c);

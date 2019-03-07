@@ -17,6 +17,7 @@ import view.ConsoleView;
 import view.LoginView;
 import view.MenuView;
 import view.MyView;
+import view.ScoresView;
 import view.Snake;
 import view.TableData;
 import utils.Events;
@@ -29,6 +30,7 @@ public class Controller {
 	 private MyView view;
 	 private ConsoleView console;
 	 private LoginView login;
+	 private ScoresView scores;
 	 private MenuView menu;
 	 private Snake snake;
 	 
@@ -125,6 +127,7 @@ public class Controller {
 		 login = new LoginView();
 		 view.setLogin(login);
 		 userLogged = null;
+		 console.initEvents();
 	 }
 	 
 	 /**
@@ -149,14 +152,15 @@ public class Controller {
 	 }
 	 
 	 public void addNewScore(String newScore) {
-		 //userLogged.addNewScore(new Score());
+		 userLogged.addNewScore(new Score(newScore));
 	 }
 	 
 	 /**
 	  * 
 	  */
 	 public void switchToScores() {
-		
+		scores = new ScoresView();
+		view.setScores(scores);
 	 }
 	 
 	 /**

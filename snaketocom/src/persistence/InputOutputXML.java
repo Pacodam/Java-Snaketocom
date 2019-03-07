@@ -33,9 +33,8 @@ public class InputOutputXML {
 	private static final File SCORES_FILE = new File(XML_FOLDER + SEPARATOR + "scores.xml");
 	
 	private static org.w3c.dom.Document doc;
-	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
 
-	//m.setTime(LocalDateTime.parse(n.getAttributes().getNamedItem("fechahora").getNodeValue(), formatter));
+	
 	
 	 public static User doLogin(String name, String pass) throws ParserConfigurationException, SAXException, IOException, SnakeExceptions{
 	       
@@ -72,7 +71,7 @@ public class InputOutputXML {
 	 public static List<Score> getUserScores(User user) throws SnakeExceptions, ParserConfigurationException, SAXException, IOException{
 		 
 		 List<Score> scores = new ArrayList<>();
-		 LocalDateTime dateTime = null;
+		 String dateTime = null;
 		 String score = null;
 		 int i, j = 0;
 		 
@@ -102,7 +101,7 @@ public class InputOutputXML {
 	                    	   String contenido = actual.getTextContent();
 	                    	   switch (actual.getNodeName()) {
 	                             case "time":
-	                            	 dateTime = LocalDateTime.parse(contenido, formatter);
+	                            	 dateTime = contenido;
 	                                break;
 	                             case "points":
 	                                 score = contenido;     
