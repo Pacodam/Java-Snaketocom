@@ -56,6 +56,11 @@ public class User {
 		this.newScores.add(newScore);
 	}
 	
+	public String getResume() {
+		
+		return "s";
+	}
+	
 	
 	
 	

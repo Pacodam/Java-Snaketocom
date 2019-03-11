@@ -48,6 +48,10 @@ public void setPoints(String points) {
 	this.points = points;
 }
 
+public int getPointsAsInt() {
+	return Integer.parseInt(points.replaceFirst("^0+(?!$)", ""));
+}
+
 @Override
 public String toString() {
 	return "Score [time=" + time + ", points=" + points + "]";

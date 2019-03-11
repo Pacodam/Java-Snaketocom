@@ -63,10 +63,12 @@ public class MyView {
 		panel.getSplitPane().setDividerLocation(200);
 	}
 	
-	/*
+	
+	
 	public void setConsole(ConsoleView c) {
+		
 	   // panel.getSplitPane().setLeftComponent(c);
-	} */
+	} 
 	
 	/*
 	public void setLoginView(LoginView l) {

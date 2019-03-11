@@ -32,6 +32,9 @@ public class InputOutputXML {
 	private static final File PASSWORD_FILE = new File(XML_FOLDER + SEPARATOR + "passwords.xml");
 	private static final File SCORES_FILE = new File(XML_FOLDER + SEPARATOR + "scores.xml");
 	
+	private static DocumentBuilderFactory factory;
+    private static DocumentBuilder builder;
+	
 	private static org.w3c.dom.Document doc;
 
 	
@@ -42,8 +45,8 @@ public class InputOutputXML {
 	        int i = 0;
 		 
             //initial elements
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            factory = DocumentBuilderFactory.newInstance();
+            builder = factory.newDocumentBuilder();
             doc = builder.parse(PASSWORD_FILE);
             
             //Main node and child Nodelist
@@ -68,6 +71,15 @@ public class InputOutputXML {
 	    } 
 	 
 	 
+	 /**
+	  * 
+	  * @param user
+	  * @return
+	  * @throws SnakeExceptions
+	  * @throws ParserConfigurationException
+	  * @throws SAXException
+	  * @throws IOException
+	  */
 	 public static List<Score> getUserScores(User user) throws SnakeExceptions, ParserConfigurationException, SAXException, IOException{
 		 
 		 List<Score> scores = new ArrayList<>();
@@ -76,8 +88,8 @@ public class InputOutputXML {
 		 int i, j = 0;
 		 
 		//initial elements
-         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-         DocumentBuilder builder = factory.newDocumentBuilder();
+         factory = DocumentBuilderFactory.newInstance();
+         builder = factory.newDocumentBuilder();
          doc = builder.parse(SCORES_FILE);
          
          //Main node and child Nodelist
@@ -118,6 +130,46 @@ public class InputOutputXML {
          } */
 		return scores; 
    }
+	 
+	 /**
+	  * 
+	  * @return
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	  */
+	 public static List<String> getUserNames() throws ParserConfigurationException, SAXException, IOException{
+		 
+		 List<String> users = new ArrayList<>();
+		 //initial elements
+         factory = DocumentBuilderFactory.newInstance();
+         builder = factory.newDocumentBuilder();
+         doc = builder.parse(PASSWORD_FILE);
+         
+         //Main node and child Nodelist
+         Node root = doc.getFirstChild();  //passwords
+         NodeList child = root.getChildNodes(); //all score inside
+         
+         //Processing of every child into the NodeList
+         for(int i = 0; i < child.getLength(); i++) {
+             Node actualItem = child.item(i);
+             if(actualItem.getNodeType() == Node.ELEMENT_NODE){
+                 
+                 Element e = (Element)actualItem;
+                 users.add(e.getAttribute("name"));
+             }
+	    }
+         /*
+         for(String s: users){
+        	 System.out.println(s);
+         } */
+		return users; 
+	 }
+	 
+	 public static User getUserByName(String name) {
+		 
+		 return null;
+	 }
 }
 	 
 	 

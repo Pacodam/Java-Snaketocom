@@ -45,6 +45,8 @@ public class Controller {
 
 	 }
 	 
+	 //console view logic
+	 
 	 /**
 	  * Listener of popup menu in console view
 	  */
@@ -62,12 +64,7 @@ public class Controller {
 	    console.getItem3().addActionListener(e -> exit());
 	 }
 	 
-	 /**
-	  * 
-	  */
-	 public void consoleMenuOptions() {
-		 System.out.println("pressed");
-	 }
+	 //Login View logic
 	 
 	 /**
 	  * The listeners of the login view
@@ -95,6 +92,28 @@ public class Controller {
 	 }
 	 
 	 /**
+	  * 
+	  */
+	 public void switchToLogin() {
+		 login = new LoginView();
+		 view.setLogin(login);
+		 userLogged = null;
+		 console.initEvents();
+	 }
+	 
+	 
+	 
+	 //Menu View logic
+	 
+	 /**
+	  * 
+	  */
+	 public void consoleMenuOptions() {
+		 System.out.println("pressed");
+	 }
+	 
+	 
+	 /**
 	  * Init menu and listeners
 	 * @throws SnakeExceptions 
 	  */
@@ -116,22 +135,28 @@ public class Controller {
 				
 			}  
 		 menu.getNewGame().addActionListener(e -> newGame());
-		 menu.getScores().addActionListener(e -> switchToScores());
+		 menu.getScores().addActionListener(e -> {
+			try {
+				switchToScores();
+			} catch (ParserConfigurationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		 menu.getExit().addActionListener(e -> exit()); 
 	 }
 	 
-	 /**
-	  * 
-	  */
-	 public void switchToLogin() {
-		 login = new LoginView();
-		 view.setLogin(login);
-		 userLogged = null;
-		 console.initEvents();
-	 }
+	
+	 //Snake view logic
 	 
 	 /**
-	  * problematic
+	  * 
 	  */
 	 public void newGame() {
 		 snake = new Snake();
@@ -155,13 +180,52 @@ public class Controller {
 		 userLogged.addNewScore(new Score(newScore));
 	 }
 	 
+	 
+	 //scores view logic
+	 
 	 /**
+	 * @throws IOException 
+	 * @throws SAXException 
+	 * @throws ParserConfigurationException 
 	  * 
 	  */
-	 public void switchToScores() {
+	 public void switchToScores() throws ParserConfigurationException, SAXException, IOException {
 		scores = new ScoresView();
 		view.setScores(scores);
+		//tab1 
+		scores.getFind().addActionListener(e -> searchByName(scores.getTextField().getText()));
+		scores.getBackMenu().addActionListener(e -> {
+			try {
+				switchToMenu();
+			} catch (SnakeExceptions e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		//scores.getJList().add
+		List<String> userNames = InputOutputXML.getUserNames();
+		scores.setUsersList(userNames);
+		
+		
 	 }
+	 
+	     //tab 1, "users list" logic
+	     public void searchByName(String name){
+	    	try {
+	    	 if(name == null) {
+	    		 throw new SnakeExceptions(SnakeExceptions.VOID_SEARCH);
+	    	 }
+	    	 else {
+	    		 User userSearched = InputOutputXML.getUserByName(name);
+	    		 scores.setResult(userSearched.getResume());
+	    	 }
+	    	}catch(SnakeExceptions e) {
+	    		e.printStackTrace();
+	    	}
+	     }
+	 
+	 
+	 //exit events
 	 
 	 /**
 	  * 
