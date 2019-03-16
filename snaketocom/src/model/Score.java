@@ -2,26 +2,32 @@ package model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
-public class Score {
+public class Score implements Comparable<Score> {
 	
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
   //dateTime = LocalDateTime.parse(contenido, formatter);
   private LocalDateTime time;
   private String timeString;
-  private String points;
+  private int points;
   
-  //constructor of existing Score
-  public Score(String time, String points) {
+  //constructor of  Score, receiving int
+  public Score(String timeString, int points) {
 	  this.points = points;
-	  this.timeString = time;
+	  this.time = LocalDateTime.parse(timeString, formatter);
+  }
+  
+  //constructor of Score, receiving String
+  public Score(String timeString, String pointsFormatted) {
+	  this.points = Integer.parseInt(pointsFormatted.replaceFirst("^0+(?!$)", ""));
+	  this.time = LocalDateTime.parse(timeString, formatter);
   }
   
   //constructor of new Score
-  public Score(String points) {
+  public Score(int points) {
 	  this.points = points;
-	  
-	  //this.time = LocalDateTime.now();
+	  this.time = LocalDateTime.now();
   }
   
 public String getTimeString() {
@@ -36,26 +42,35 @@ public LocalDateTime getTime() {
 	return time;
 }
 
-public void setTime(LocalDateTime time) {
-	this.time = time;
+public String actualTimeString() {
+    return time.format(formatter);
 }
 
-public String getPoints() {
+public int getPoints() {
 	return points;
 }
 
-public void setPoints(String points) {
+public void setPoints(int points) {
 	this.points = points;
 }
 
-public int getPointsAsInt() {
-	return Integer.parseInt(points.replaceFirst("^0+(?!$)", ""));
-}
 
 @Override
 public String toString() {
 	return "Score [time=" + time + ", points=" + points + "]";
 }
+
+public String getPointsFormatted() {
+if(points == 0) return "0000000000";
+   return String.format(Locale.getDefault(), "%010d", points);
+}
+
+@Override
+public int compareTo(Score o) {
+	return points - o.getPoints();
+}
+
+
   
   
   

@@ -1,9 +1,13 @@
 package controller;
 
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -97,8 +101,10 @@ public class Controller {
 	 public void switchToLogin() {
 		 login = new LoginView();
 		 view.setLogin(login);
+		 console.setTextEvent(Events.LOGOUT);
 		 userLogged = null;
 		 console.initEvents();
+	
 	 }
 	 
 	 
@@ -122,6 +128,8 @@ public class Controller {
 			throw new SnakeExceptions(SnakeExceptions.MENU_NOT_ALLOWED);
 		}
 		 view.setMenu(menu);
+		 console.setTextEvent(Events.MENU);
+		 console.setTextEvent(Events.XML);
 		 
 			try {
 				List<Score> scores = InputOutputXML.getUserScores(userLogged);
@@ -176,8 +184,11 @@ public class Controller {
 		}); 
 	 }
 	 
-	 public void addNewScore(String newScore) {
-		 userLogged.addNewScore(new Score(newScore));
+	 public void addNewScore(int score) {
+		 Score newScore = new Score(score);
+		 userLogged.addNewScore(newScore);
+		 //save in xml
+		 
 	 }
 	 
 	 
@@ -192,8 +203,9 @@ public class Controller {
 	 public void switchToScores() throws ParserConfigurationException, SAXException, IOException {
 		scores = new ScoresView();
 		view.setScores(scores);
+		console.setTextEvent(Events.SCORES);
 		//tab1 
-		scores.getFind().addActionListener(e -> searchByName(scores.getTextField().getText()));
+		//scores.getFind().addActionListener(e -> searchByName(scores.getTextField().getText()));
 		scores.getBackMenu().addActionListener(e -> {
 			try {
 				switchToMenu();
@@ -202,26 +214,30 @@ public class Controller {
 				e1.printStackTrace();
 			}
 		});
-		//scores.getJList().add
 		List<String> userNames = InputOutputXML.getUserNames();
 		scores.setUsersList(userNames);
-		
+		/*
+		JList jlist = scores.getJList();
+		//jlist.getSelectedValue() */
 		
 	 }
 	 
 	     //tab 1, "users list" logic
-	     public void searchByName(String name){
+	     public static String userResume(String name) throws ParserConfigurationException, SAXException, IOException{
 	    	try {
 	    	 if(name == null) {
 	    		 throw new SnakeExceptions(SnakeExceptions.VOID_SEARCH);
 	    	 }
 	    	 else {
-	    		 User userSearched = InputOutputXML.getUserByName(name);
-	    		 scores.setResult(userSearched.getResume());
+	    		 User userSearched = new User(); 
+	    		 userSearched.setName(name);
+	    		 userSearched.setScoresHistory(InputOutputXML.getUserScores(userSearched));	 
+	    		 return userSearched.getResumeForScore1();
 	    	 }
 	    	}catch(SnakeExceptions e) {
 	    		e.printStackTrace();
 	    	}
+	    	return null;
 	     }
 	 
 	 
@@ -231,6 +247,36 @@ public class Controller {
 	  * 
 	  */
 	 public void exit() {
+		 //save scores
+		 saveScores();
+		 System.exit(0);
 		 
 	 }
+	 
+	 public void saveScores() {
+		 console.setTextEvent(Events.SAVE_SCORES);
+	 }
+	 
+	 //user best score
+	 public static String getUserBestScore() {
+		 return "hola";
+	 }
+	 
+	 
+	 /*
+	 public void mouseClicked(MouseEvent e) {
+	        if (e.getClickCount() == 1) {
+	           String selectedItem = (String) list.getSelectedValue();
+	           // add selectedItem to your second list.
+	           DefaultListModel model = (DefaultListModel) list2.getModel();
+	           if(model == null)
+	           {
+	                 model = new DefaultListModel();
+	                 list2.setModel(model);
+	           }
+	           model.addElement(selectedItem);
+
+	         }
+	    }
+	    */
 }

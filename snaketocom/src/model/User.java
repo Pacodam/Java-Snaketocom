@@ -2,22 +2,23 @@ package model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class User {
 
 	private String name;
 	private String password;
-	private List<Score> scoresHistory;
-	private List<Score> newScores;
+	private List<Score> scores;
 	
+	public User() {}
 	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
-	    this.newScores = new ArrayList<>();
+	    this.scores = new ArrayList<>();
 	}
 	
 	public void setScoresHistory(ArrayList<Score> scores) {
-		this.scoresHistory = scores;
+		this.scores = scores;
 	}
 
 	public String getName() {
@@ -36,28 +37,27 @@ public class User {
 		this.password = password;
 	}
 
-	public List<Score> getScoresHistory() {
-		return scoresHistory;
+
+	public void setScoresHistory(List<Score> scores) {
+		this.scores = scores;
 	}
 
-	public void setScoresHistory(List<Score> scoresHistory) {
-		this.scoresHistory = scoresHistory;
+	public List<Score> scores() {
+		return scores;
 	}
 
-	public List<Score> getNewScores() {
-		return newScores;
-	}
-
-	public void setNewScores(List<Score> newScores) {
-		this.newScores = newScores;
+	
+	public void addNewScore(Score score) {
+		this.scores.add(score);
 	}
 	
-	public void addNewScore(Score newScore) {
-		this.newScores.add(newScore);
-	}
-	
-	public String getResume() {
-		
+	public String getResumeForScore1() {
+		Collections.sort(scores);
+		Score bestScore = scores.get(0);
+		String s = name + "\n" +
+		          "Plays: " + scores.size() + "\n"+
+				  "Best Score : " +  bestScore.getPointsFormatted() + "\n" +
+		          "on Date: " + bestScore.getTimeString();
 		return "s";
 	}
 	

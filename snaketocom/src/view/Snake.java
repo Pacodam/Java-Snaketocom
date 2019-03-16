@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -43,7 +45,6 @@ public class Snake extends JPanel implements ActionListener {
     private Image head;
     
     //additions
-    private String score = "0000000000";
     private int points = 0;
     private JButton playAgain = new JButton("Try again");
     private JButton goMenu = new JButton("Return to menu");
@@ -155,22 +156,6 @@ public class Snake extends JPanel implements ActionListener {
      */
     private void updatePoints() {
     	points += 500;
-    	scoreConstructor(Integer.toString(points).length());
-    }
-    
-    /**
-     * Score constructor
-     */
-    private void scoreConstructor(int p) {
-    	StringBuilder sb = new StringBuilder();
-    	int zerosNum = 10 - p;
-    	for(int i = 0; i < zerosNum; i++) {
-    		sb.append("0");
-    		System.out.println(sb.toString());
-    	}
-    	sb.append(Integer.toString(points));
-    	score = sb.toString();
-    	System.out.println(sb.toString());
     }
     
     /**
@@ -180,8 +165,9 @@ public class Snake extends JPanel implements ActionListener {
     	Font small = new Font("Helvetica", Font.BOLD, 24);
         FontMetrics metr = getFontMetrics(small);
         g.setColor(Color.red);
-        //g.drawString(score, (B_WIDTH - metr.stringWidth(score)) / 2, B_HEIGHT / 2 );
-        g.drawString(score, 20, 40);
+        String scoreForm = String.format(Locale.getDefault(), "%010d", points);
+        System.out.println(scoreForm);
+        g.drawString(scoreForm, 20, 40);
     }
 
     private void move() {
@@ -293,8 +279,8 @@ public class Snake extends JPanel implements ActionListener {
         }
     }
 
-	public String getScore() {
-		return score;
+	public int getScore() {
+		return points;
 	}
 
 	public JButton getPlayAgain() {

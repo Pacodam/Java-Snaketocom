@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JMenuBar;
 
 public class ConsoleView extends JPanel {
 	
@@ -18,6 +19,7 @@ public class ConsoleView extends JPanel {
 	private JMenuItem item3;
 	private JScrollPane scrollPane;
     private JTextArea textArea;
+    private JMenuBar menuBar_1;
 	
 	/**
 	 * Create the panel.
@@ -25,20 +27,14 @@ public class ConsoleView extends JPanel {
 	public ConsoleView() {
 		
 		setBounds(0,0,200,600);
-		//setLayout(null);
+		setLayout(null);
+		
+		menuBar_1 = new JMenuBar();
+		menuBar_1.setBounds(0, 0, 198, 21);
+		add(menuBar_1);
 		
 		menuBar = new JMenu("Program");
-		menuBar.setBounds(10, 11, 95, 22);
-		menuBar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-			}
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-			}
-		});
-		setLayout(null);
-		add(menuBar);
+		menuBar_1.add(menuBar);
 		
 		/*
 		menuBar = new JMenuBar();
@@ -53,14 +49,17 @@ public class ConsoleView extends JPanel {
 		item3 = new JMenuItem("EXIT");
 		menuBar.add(item3);
 		
+		
 	    scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 36, 200, 385);
+		scrollPane.setBounds(0, 36, 200, 564);
 		add(scrollPane);
 		
 	    textArea = new JTextArea();
-	    textArea.isEditable();
+	    textArea.setEditable(false);
+	    //textArea.isEditable();
 		scrollPane.setViewportView(textArea);
-	
+		
+	    sb = new StringBuilder();
 	}
 
 	public JMenu getMenuBar() {
@@ -75,34 +74,24 @@ public class ConsoleView extends JPanel {
 		return item1;
 	}
 
-	public void setItem1(JMenuItem item1) {
-		this.item1 = item1;
-	}
 
 	public JMenuItem getItem2() {
 		return item2;
 	}
 
-	public void setItem2(JMenuItem item2) {
-		this.item2 = item2;
-	}
 
 	public JMenuItem getItem3() {
 		return item3;
 	}
-
-	public void setItem3(JMenuItem item3) {
-		this.item3 = item3;
-	}
-	
 	
 	public void setTextEvent(String event) {
 		//sb.append(event + "\n");
 		//textArea.setText(sb.toString());
+		textArea.append(event);
+		textArea.append("\n");
 	}
 	
 	public void initEvents() {
-		sb = new StringBuilder();
-        textArea.removeAll();
+        textArea.setText(null);
 	}
 }

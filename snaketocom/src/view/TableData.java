@@ -39,9 +39,9 @@ public class TableData extends AbstractTableModel {
 
 	            switch(columnIndex){
 	                case 0:
-	                    return score.getTimeString();
+	                    return score.actualTimeString();
 	                case 1:
-	                    return score.getPoints();
+	                    return score.getPointsFormatted();
 	            }
 	            return null;
 	    }

@@ -17,6 +17,7 @@ public class MyFrame extends JFrame {
 	public MyFrame() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setBounds(1000, 100, 900, 600);
 	}
 

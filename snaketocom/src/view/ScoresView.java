@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JComponent;
@@ -10,10 +11,17 @@ import javax.swing.JList;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import controller.Controller;
+
 import java.util.List;
 import java.awt.TextArea;
 
@@ -49,6 +57,26 @@ public class ScoresView extends JPanel {
 		add(tabbedPane);
 		
 		backMenu = new JButton("<-");
+		backMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if("" != (String) jlist.getSelectedValue()) {
+					String selectedItem = (String) jlist.getSelectedValue();
+					try {
+						textArea.setText(Controller.userResume(selectedItem));
+					} catch (ParserConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SAXException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+			}
+		});
 	    backMenu.setBounds(31, 25, 89, 23);
 	    add(backMenu);
 	    
@@ -70,11 +98,29 @@ public class ScoresView extends JPanel {
 		userSearch.setBounds(32, 50, 46, 14);
 		tab1.add(userSearch);
 		
-		textArea = new JTextArea();
+		textArea = new JTextArea(BorderLayout.CENTER);
 		textArea.setBounds(216, 111, 305, 230);
 		tab1.add(textArea);
 		
 		scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String selectedItem = (String) jlist.getSelectedValue();
+				try {
+					textArea.setText(Controller.userResume(selectedItem));
+				} catch (ParserConfigurationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SAXException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+			  }
+		    });
 		scrollPane.setBounds(32, 115, 172, 226);
 		tab1.add(scrollPane);
 		
@@ -115,8 +161,11 @@ public class ScoresView extends JPanel {
 		return jlist;
 	}
 		
+    public void setUserResume(String resume) {
+    	textArea.setText(resume);
+    }
 	
-
+	
 	public JButton getBackMenu() {
 		return backMenu;
 	}
@@ -133,9 +182,6 @@ public class ScoresView extends JPanel {
 		return userSearch;
 	}
 
-	public void setResult(String s) {
-		textArea.setText(s);
-	}
 }
 
 

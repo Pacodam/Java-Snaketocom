@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuView extends JPanel {
 
@@ -37,6 +39,11 @@ public class MenuView extends JPanel {
 		add(scores);
 		
 		exit = new JButton("Exit");
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		exit.setBounds(496, 405, 89, 36);
 		add(exit);
 		

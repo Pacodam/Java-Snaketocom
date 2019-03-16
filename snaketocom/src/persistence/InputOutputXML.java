@@ -124,10 +124,6 @@ public class InputOutputXML {
                   }
            }  
 	    }
-         /*
-         for(Score s: scores){
-        	 System.out.println(s.toString());
-         } */
 		return scores; 
    }
 	 
@@ -159,10 +155,6 @@ public class InputOutputXML {
                  users.add(e.getAttribute("name"));
              }
 	    }
-         /*
-         for(String s: users){
-        	 System.out.println(s);
-         } */
 		return users; 
 	 }
 	 
