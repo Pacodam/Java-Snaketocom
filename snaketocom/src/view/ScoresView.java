@@ -9,6 +9,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class ScoresView extends JPanel {
 	private JTextArea textArea;
 	private JList<String> jlist;
 	private JScrollPane scrollPane;
+	private JTextArea textArea_1;
 	
 	/**
 	 * Create the panel.
@@ -57,26 +60,6 @@ public class ScoresView extends JPanel {
 		add(tabbedPane);
 		
 		backMenu = new JButton("<-");
-		backMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if("" != (String) jlist.getSelectedValue()) {
-					String selectedItem = (String) jlist.getSelectedValue();
-					try {
-						textArea.setText(Controller.userResume(selectedItem));
-					} catch (ParserConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SAXException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
-				}
-			}
-		});
 	    backMenu.setBounds(31, 25, 89, 23);
 	    add(backMenu);
 	    
@@ -91,6 +74,14 @@ public class ScoresView extends JPanel {
 		textField.setColumns(10);
 		
 		find = new JButton("...");
+		find.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if("" != textField.getText()) {
+				    String find = textField.getText();
+				    textArea.setText(Controller.userResume(find));	
+				}
+			}
+		});
 		find.setBounds(432, 41, 89, 32);
 		tab1.add(find);
 		
@@ -103,36 +94,22 @@ public class ScoresView extends JPanel {
 		tab1.add(textArea);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String selectedItem = (String) jlist.getSelectedValue();
-				try {
-					textArea.setText(Controller.userResume(selectedItem));
-				} catch (ParserConfigurationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SAXException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}	
-			  }
-		    });
 		scrollPane.setBounds(32, 115, 172, 226);
 		tab1.add(scrollPane);
 		
-		//jlist = new JList(names);
-		//scrollPane.setViewportView(jlist);
-		
-		
-		
-		
-		
+		//tab2
 		tab2 = new JPanel();
 		tabbedPane.addTab("Best User Score", tab2);
+		tab2.setLayout(null);
+		
+		textArea_1 = new JTextArea();
+		textArea_1.setBounds(0, 11, 581, 365);
+		tab2.add(textArea_1);
+		
+		
+		
+		
+		
 		tab3 = new JPanel();
 	    tabbedPane.addTab("Score Filter", tab3);
 	    
@@ -154,8 +131,18 @@ public class ScoresView extends JPanel {
 		}
 		jlist = new JList(names);
 		scrollPane.setViewportView(jlist);
+		jlist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String selectedItem = (String) jlist.getSelectedValue();
+				System.out.println((String) jlist.getSelectedValue());
+				textArea.setText(Controller.userResume(selectedItem));
+			  }
+		    });
 		
 	}  
+	
+	//tab1
 	
 	public JList getJList() {
 		return jlist;
@@ -181,24 +168,12 @@ public class ScoresView extends JPanel {
 	public JLabel getUserSearch() {
 		return userSearch;
 	}
-
+	
+	//tab2
+	public void setBestScoreResume(String resume) {
+		textArea_1.setText(resume);
+	}
 }
 
 
-/*
- * string columnames array de titulos
- * string data = this.mainWindow.getMyScores() dimension 2
- * table = new Jtable(data,columnames)
- * scroll pane
- * setLaout groupLayout
- * etc
- * 
- * 
- * string name = nombres
- * lsit = new Jlist(names);
- * scrollPanesetViewPortView(list)
- * 
- * añadir listeners para sleeccion
- * 
- * 
- * */
+

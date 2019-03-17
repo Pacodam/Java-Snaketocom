@@ -17,6 +17,11 @@ public class User {
 	    this.scores = new ArrayList<>();
 	}
 	
+	public User(String name, List scores) {
+		this.name = name;
+		this.scores = scores;
+	}
+	
 	public void setScoresHistory(ArrayList<Score> scores) {
 		this.scores = scores;
 	}
@@ -51,15 +56,22 @@ public class User {
 		this.scores.add(score);
 	}
 	
+	public Score getBestScore() {
+		Collections.sort(scores);
+		return scores.get(0);
+	}
+	
 	public String getResumeForScore1() {
 		Collections.sort(scores);
 		Score bestScore = scores.get(0);
 		String s = name + "\n" +
 		          "Plays: " + scores.size() + "\n"+
 				  "Best Score : " +  bestScore.getPointsFormatted() + "\n" +
-		          "on Date: " + bestScore.getTimeString();
-		return "s";
+		          "on Date: " + bestScore.actualTimeString();
+		return s;
 	}
+	
+	
 	
 	
 	

@@ -65,9 +65,12 @@ if(points == 0) return "0000000000";
    return String.format(Locale.getDefault(), "%010d", points);
 }
 
+
+
 @Override
 public int compareTo(Score o) {
-	return points - o.getPoints();
+	return o.getPoints() - points;  //de mayor a menor
+	//return points - o.getPoints(); de menor a mayor
 }
 
 

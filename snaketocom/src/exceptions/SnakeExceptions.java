@@ -7,7 +7,7 @@ public class SnakeExceptions extends Exception {
 
 	public static final int WRONG_LOGIN = 0;
     public static final int MENU_NOT_ALLOWED = 1;
-    public static final int USER_EXISTS = 2;
+    public static final int USER_NO_EXISTS = 2;
     public static final int VOID_SEARCH = 3;
     public static final int WRONG_US_PASS = 4;
     public static final int NOT_LOGGED = 5;
@@ -23,7 +23,7 @@ public class SnakeExceptions extends Exception {
     private final List<String> messages = Arrays.asList(
         "Wrong login or password. Try again",
         "Menu option requires a login",
-        "[ User already exists ]",
+        "There is no player with that name",
         "Enter some text to find a user",
         "[ Username or password is incorrect ]",
         "[ You are not logged in ]",

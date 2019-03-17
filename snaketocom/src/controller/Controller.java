@@ -5,7 +5,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -205,7 +209,6 @@ public class Controller {
 		view.setScores(scores);
 		console.setTextEvent(Events.SCORES);
 		//tab1 
-		//scores.getFind().addActionListener(e -> searchByName(scores.getTextField().getText()));
 		scores.getBackMenu().addActionListener(e -> {
 			try {
 				switchToMenu();
@@ -216,26 +219,54 @@ public class Controller {
 		});
 		List<String> userNames = InputOutputXML.getUserNames();
 		scores.setUsersList(userNames);
-		/*
-		JList jlist = scores.getJList();
-		//jlist.getSelectedValue() */
+		
+		//tab2
+		scores.setBestScoreResume(getBestPlayer());
 		
 	 }
 	 
+	 public String getBestPlayer() {
+		 Map<String, Score> allScores = new LinkedHashMap<>();
+		 try {
+			List<String> userNames = InputOutputXML.getUserNames();
+			for(String s: userNames) {
+				User user = new User();
+				user.setName(s);
+				user.setScoresHistory(InputOutputXML.getUserScores(user));
+				allScores.put(s, user.getBestScore());
+			}
+		} catch (ParserConfigurationException | SAXException | IOException | SnakeExceptions e) {
+			e.printStackTrace();
+		}
+		 	
+		 Map.Entry<String,Score> entry = allScores.entrySet().iterator().next();
+		 String bName= entry.getKey();
+		 Score bScore =entry.getValue();
+		 
+		 String s = "Name: " + bName + "\n" +
+		          "Score: " + bScore.getPointsFormatted() + "\n"+
+				  "Date : " +  bScore.actualTimeString();
+		         
+		return s;
+	}
+		
+		 
+		
+	 
+	 
 	     //tab 1, "users list" logic
-	     public static String userResume(String name) throws ParserConfigurationException, SAXException, IOException{
-	    	try {
-	    	 if(name == null) {
-	    		 throw new SnakeExceptions(SnakeExceptions.VOID_SEARCH);
-	    	 }
-	    	 else {
+	     public static String userResume(String name){
+	    	 try {
 	    		 User userSearched = new User(); 
 	    		 userSearched.setName(name);
-	    		 userSearched.setScoresHistory(InputOutputXML.getUserScores(userSearched));	 
+	    		 List<Score> scores = InputOutputXML.getUserScores(userSearched);
+	    		 if(scores.isEmpty()) {
+	    			 throw new SnakeExceptions(SnakeExceptions.USER_NO_EXISTS);
+	    		 }
+	    		 userSearched.setScoresHistory(scores);	 
 	    		 return userSearched.getResumeForScore1();
-	    	 }
-	    	}catch(SnakeExceptions e) {
-	    		e.printStackTrace();
+	    	}catch(SAXException | IOException | ParserConfigurationException | SnakeExceptions e) {
+	    		JOptionPane.showMessageDialog(null, e, "Info", JOptionPane.INFORMATION_MESSAGE);
 	    	}
 	    	return null;
 	     }

@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 public class MyPanel extends JPanel {
 
+	
 	private JTextField textField;
 	private JPasswordField passwordField;
 	
@@ -98,5 +99,5 @@ public class MyPanel extends JPanel {
 	
 	
 	
-
+	
 }
