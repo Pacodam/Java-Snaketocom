@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 import exceptions.SnakeExceptions;
 import model.Score;
 import model.User;
+import model.UserScore;
 import persistence.InputOutputXML;
 import view.ConsoleView;
 import view.LoginView;
@@ -191,8 +192,7 @@ public class Controller {
 	 public void addNewScore(int score) {
 		 Score newScore = new Score(score);
 		 userLogged.addNewScore(newScore);
-		 //save in xml
-		 
+		 InputOutputXML.saveScore(newScore, userLogged); 
 	 }
 	 
 	 
@@ -226,33 +226,29 @@ public class Controller {
 	 }
 	 
 	 public String getBestPlayer() {
-		 Map<String, Score> allScores = new LinkedHashMap<>();
+	     List<UserScore> userScores = new ArrayList<>();
 		 try {
 			List<String> userNames = InputOutputXML.getUserNames();
 			for(String s: userNames) {
-				User user = new User();
-				user.setName(s);
-				user.setScoresHistory(InputOutputXML.getUserScores(user));
-				allScores.put(s, user.getBestScore());
+				List<Score> scores = InputOutputXML.getUserScores(new User(s, "x"));
+				for(Score ss: scores) {
+					userScores.add(new UserScore(s, ss));
+				}
 			}
 		} catch (ParserConfigurationException | SAXException | IOException | SnakeExceptions e) {
 			e.printStackTrace();
 		}
 		 	
-		 Map.Entry<String,Score> entry = allScores.entrySet().iterator().next();
-		 String bName= entry.getKey();
-		 Score bScore =entry.getValue();
+		Collections.sort(userScores);
+		UserScore ms = userScores.get(0);
 		 
-		 String s = "Name: " + bName + "\n" +
-		          "Score: " + bScore.getPointsFormatted() + "\n"+
-				  "Date : " +  bScore.actualTimeString();
+		 String s = "Name: " + ms.getName() + "\n" +
+		          "Score: " + ms.getScore().getPointsFormatted() + "\n"+
+				  "Date : " +  ms.getScore().actualTimeString();
 		         
 		return s;
 	}
 		
-		 
-		
-	 
 	 
 	     //tab 1, "users list" logic
 	     public static String userResume(String name){
@@ -279,19 +275,11 @@ public class Controller {
 	  */
 	 public void exit() {
 		 //save scores
-		 saveScores();
-		 System.exit(0);
-		 
+		 System.exit(0); 
 	 }
 	 
-	 public void saveScores() {
-		 console.setTextEvent(Events.SAVE_SCORES);
-	 }
 	 
-	 //user best score
-	 public static String getUserBestScore() {
-		 return "hola";
-	 }
+	 
 	 
 	 
 	 /*

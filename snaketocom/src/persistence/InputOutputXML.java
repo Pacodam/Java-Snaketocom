@@ -16,6 +16,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import controller.FileNotFoundException;
+import controller.FileOutputStream;
+import controller.Message;
+import controller.OutputFormat;
+import controller.XMLSerializer;
 import exceptions.SnakeExceptions;
 import model.Score;
 import model.User;
@@ -158,10 +163,54 @@ public class InputOutputXML {
 		return users; 
 	 }
 	 
-	 public static User getUserByName(String name) {
-		 
-		 return null;
+	 
+	 public static void saveScore(Score score, User user) {
+		
+         factory = DocumentBuilderFactory.newInstance();
+         try {
+			builder = factory.newDocumentBuilder();
+            doc = builder.parse(SCORES_FILE);
+         
+		    Node time = createNode("time", score.getTimeString());
+		    Node points = createNode("points", score.getPointsFormatted());
+		    Element sc = doc.createElement("score");
+		    sc.setAttribute("name", user.getName());
+		    sc.appendChild(time);
+		    sc.appendChild(points);
+		    doc.getFirstChild().appendChild(sc);
+	        writeXMLFile(doc);
+		 } catch (ParserConfigurationException e) {
+			
+			e.printStackTrace();
+		} catch (SAXException |IOException e) {
+			e.printStackTrace();
+		}
 	 }
+	 
+	   
+	    private static void writeXMLFile(Document doc) throws FileNotFoundException, IOException {
+	        OutputFormat format = new OutputFormat(doc);
+	        format.setIndenting(true);
+	        XMLSerializer serializer = new XMLSerializer(new FileOutputStream(f), format);
+	        serializer.serialize(doc);
+	    }
+	    
+	    /**
+	     * Create a element node 
+	     * 
+	     * @param element name of element node
+	     * @param text content of text node of element
+	     * @return 
+	     */
+	    public static Node createNode(String element, String text) {
+	        Node node = doc.createElement(element);
+	        Node textNode = doc.createTextNode(text);
+	        node.appendChild(textNode);
+	        return node;
+	    }
+	    
+	 
+	
 }
 	 
 	 

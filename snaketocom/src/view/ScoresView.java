@@ -30,6 +30,7 @@ import java.awt.TextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.util.ArrayList;
+import javax.swing.JSpinner;
 
 
 public class ScoresView extends JPanel {
@@ -48,6 +49,8 @@ public class ScoresView extends JPanel {
 	private JList<String> jlist;
 	private JScrollPane scrollPane;
 	private JTextArea textArea_1;
+	private JList list;
+	private JScrollPane scrollPane_1;
 	
 	/**
 	 * Create the panel.
@@ -106,12 +109,32 @@ public class ScoresView extends JPanel {
 		textArea_1.setBounds(0, 11, 581, 365);
 		tab2.add(textArea_1);
 		
-		
-		
-		
-		
+		//tab 3
 		tab3 = new JPanel();
 	    tabbedPane.addTab("Score Filter", tab3);
+	    tab3.setLayout(null);
+	    
+	    JSpinner spinner = new JSpinner();
+	    spinner.setBounds(123, 68, 187, 20);
+	    tab3.add(spinner);
+	    
+	    //search scores up that value
+	    JButton btnNewButton = new JButton("Search");
+	    btnNewButton.addMouseListener(new MouseAdapter() {
+	    	@Override
+	    	public void mouseClicked(MouseEvent arg0) {
+	    		
+	    	}
+	    });
+	    btnNewButton.setBounds(348, 67, 114, 23);
+	    tab3.add(btnNewButton);
+	    
+	    scrollPane_1 = new JScrollPane();
+	    scrollPane_1.setBounds(123, 119, 341, 246);
+	    tab3.add(scrollPane_1);
+	    
+	    list = new JList();
+	    scrollPane_1.setViewportView(list);
 	    
 	    
 	    
