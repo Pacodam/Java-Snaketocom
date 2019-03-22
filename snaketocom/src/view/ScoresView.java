@@ -35,6 +35,7 @@ import javax.swing.JSpinner;
 
 public class ScoresView extends JPanel {
 
+	Controller controller = Controller.getInstance();
 	private JTabbedPane tabbedPane;
 	private JPanel tab1;
 	private JPanel tab2;
@@ -49,7 +50,7 @@ public class ScoresView extends JPanel {
 	private JList<String> jlist;
 	private JScrollPane scrollPane;
 	private JTextArea textArea_1;
-	private JList list;
+	private JList<String> list;
 	private JScrollPane scrollPane_1;
 	
 	/**
@@ -123,20 +124,19 @@ public class ScoresView extends JPanel {
 	    btnNewButton.addMouseListener(new MouseAdapter() {
 	    	@Override
 	    	public void mouseClicked(MouseEvent arg0) {
-	    		
+	    		try {
+	    		    spinner.commitEdit();
+	    		} catch ( java.text.ParseException e ) {  }
+	    		int value = (Integer) spinner.getValue();
+	    		generateResults(value);
 	    	}
 	    });
 	    btnNewButton.setBounds(348, 67, 114, 23);
 	    tab3.add(btnNewButton);
 	    
 	    scrollPane_1 = new JScrollPane();
-	    scrollPane_1.setBounds(123, 119, 341, 246);
+	    scrollPane_1.setBounds(31, 119, 517, 246);
 	    tab3.add(scrollPane_1);
-	    
-	    list = new JList();
-	    scrollPane_1.setViewportView(list);
-	    
-	    
 	    
 	    
 	    //tab BestUserScore
@@ -195,6 +195,12 @@ public class ScoresView extends JPanel {
 	//tab2
 	public void setBestScoreResume(String resume) {
 		textArea_1.setText(resume);
+	}
+	
+	public void generateResults(int value) {
+		String[] results = controller.getScoresList(value);
+		list = new JList(results);
+	    scrollPane_1.setViewportView(list);
 	}
 }
 

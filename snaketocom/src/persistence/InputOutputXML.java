@@ -10,17 +10,15 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+//import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+//import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import controller.FileNotFoundException;
-import controller.FileOutputStream;
-import controller.Message;
-import controller.OutputFormat;
-import controller.XMLSerializer;
 import exceptions.SnakeExceptions;
 import model.Score;
 import model.User;
@@ -163,7 +161,61 @@ public class InputOutputXML {
 		return users; 
 	 }
 	 
+	 public static void saveScores(User userLogged) {
+		 try {
+	            //initialization of DocumentBuilderFactory, Document and Node root
+	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	            DocumentBuilder builder = factory.newDocumentBuilder();
+	            Document doc = builder.parse(SCORES_FILE);
+	            Node root = doc.getFirstChild();
+	            
+	            List<Score> scores = userLogged.getProvisionalScores();
+	          for(Score s: scores) {
+	              //Creation of the node "score" where we 
+	               Node score = doc.createElement("score");
+	               Element n = (Element)score;
+	               n.setAttribute("name", userLogged.getName());
+	             
+	            // Creation of the  two nodes that are descendants of "mensaje"
+	            Node time = doc.createElement("time");
+	            Node points = doc.createElement("points");
+	            
+	            // Creation of text nodes with the respective parameters
+	            Node texTime = doc.createTextNode(s.getTimeString());
+	            Node textPoints= doc.createTextNode(s.getPointsFormatted());
+	        
+	            // Addition of every text to his node
+	            time.appendChild(texTime);
+	            points.appendChild(textPoints);
+	            
+	            // Addition to mensaje his childs
+	            n.appendChild(time);
+	            n.appendChild(points);
+	            
+	            // Addition of message inside our tree (mensajes)
+	            root.appendChild(n);
+	            
+	          }
+	            
+	            //Save of modified dom into xml file
+	            OutputFormat format = new OutputFormat(doc);
+	            format.setIndenting(true);
+	            
+	            // Serialization
+	            XMLSerializer serializer = new XMLSerializer(new FileOutputStream(f), format);
+	            
+	            // Writing into file
+	            serializer.serialize(doc);
+	            
+	            return true;
+	       } catch (ParserConfigurationException | SAXException | IOException ex) {
+	            System.out.println("Error al cargar el DOM: " + ex.getMessage());
+	            return false;
+	       }
+		 
+ 	 }
 	 
+	 /*
 	 public static void saveScore(Score score, User user) {
 		
          factory = DocumentBuilderFactory.newInstance();

@@ -43,6 +43,9 @@ public class Controller {
 	 private MenuView menu;
 	 private Snake snake;
 	 
+	 private static final Controller instance = new Controller();
+	 public static Controller getInstance() { return instance; }
+	 
 	 
 	 //Controller inits the initial view (SplitView with JPanel left and Jpanel right)
 	 public Controller() {
@@ -69,7 +72,10 @@ public class Controller {
 				e1.printStackTrace();
 			}
 		});
-	    console.getItem2().addActionListener(e -> switchToLogin());
+	    console.getItem2().addActionListener(e -> {
+	    	saveScores();
+	    	switchToLogin();
+	    });
 	    console.getItem3().addActionListener(e -> exit());
 	 }
 	 
@@ -90,7 +96,6 @@ public class Controller {
 			 String name = login.getsName().getText();
 			 String pass = login.getPassword().getText();
 			 userLogged = InputOutputXML.doLogin(name, pass);
-			 System.out.println(userLogged.getName());
 			 menu = new MenuView();
 			 console.setTextEvent(Events.LOGIN + " " + userLogged.getName());
 			 switchToMenu();
@@ -120,7 +125,7 @@ public class Controller {
 	  * 
 	  */
 	 public void consoleMenuOptions() {
-		 System.out.println("pressed");
+		 //System.out.println("pressed");
 	 }
 	 
 	 
@@ -132,15 +137,16 @@ public class Controller {
 		if(userLogged == null) {
 			throw new SnakeExceptions(SnakeExceptions.MENU_NOT_ALLOWED);
 		}
+		
 		 view.setMenu(menu);
 		 console.setTextEvent(Events.MENU);
 		 console.setTextEvent(Events.XML);
 		 
 			try {
 				List<Score> scores = InputOutputXML.getUserScores(userLogged);
-				 for(Score s: scores){
-		        	 System.out.println(s.toString());
-		         } 
+				 //for(Score s: scores){
+		         //	 System.out.println(s.toString());
+		         //} 
 				TableData td = new TableData(scores);
 				menu.setDataModel(td);
 			} catch (SnakeExceptions | ParserConfigurationException | SAXException | IOException e) {
@@ -162,7 +168,10 @@ public class Controller {
 				e1.printStackTrace();
 			}
 		});
-		 menu.getExit().addActionListener(e -> exit()); 
+		 menu.getExit().addActionListener(e -> {
+			saveScores(); 
+			exit();
+		 }); 
 	 }
 	 
 	
@@ -181,6 +190,8 @@ public class Controller {
 		 });
 		 snake.goMenu().addActionListener(e -> {
 			try {
+				addNewScore(snake.getScore());
+				System.out.println(snake.getScore());
 				switchToMenu();
 			} catch (SnakeExceptions e1) {
 				// TODO Auto-generated catch block
@@ -191,8 +202,7 @@ public class Controller {
 	 
 	 public void addNewScore(int score) {
 		 Score newScore = new Score(score);
-		 userLogged.addNewScore(newScore);
-		 InputOutputXML.saveScore(newScore, userLogged); 
+		 userLogged.addNewProvisionalScore(newScore);
 	 }
 	 
 	 
@@ -266,6 +276,30 @@ public class Controller {
 	    	}
 	    	return null;
 	     }
+	     
+	     public String[] getScoresList(int value) {
+	    	 List<UserScore> userScores = new ArrayList<>();
+			 try {
+				List<String> userNames = InputOutputXML.getUserNames();
+				for(String s: userNames) {
+					List<Score> scores = InputOutputXML.getUserScores(new User(s, "x"));
+					for(Score ss: scores) {
+						if(ss.getPoints() >= value) {
+						userScores.add(new UserScore(s, ss));
+						}
+					}
+				}
+			} catch (ParserConfigurationException | SAXException | IOException | SnakeExceptions e) {
+				e.printStackTrace();
+			}
+			String[] result = new String[userScores.size()];
+			 Collections.sort(userScores);
+			 for(int i = 0; i < userScores.size(); i++) {
+				 result[i] = userScores.get(i).toString();
+				 System.out.println(userScores.get(i).toString());
+			 }
+			 return result;
+	     }
 	 
 	 
 	 //exit events
@@ -274,8 +308,12 @@ public class Controller {
 	  * 
 	  */
 	 public void exit() {
-		 //save scores
 		 System.exit(0); 
+	 }
+	 
+	 public void saveScores() {
+		 System.out.println("saveee");
+		 InputOutputXML.saveScores(userLogged);
 	 }
 	 
 	 

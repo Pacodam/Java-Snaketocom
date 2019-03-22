@@ -166,7 +166,6 @@ public class Snake extends JPanel implements ActionListener {
         FontMetrics metr = getFontMetrics(small);
         g.setColor(Color.red);
         String scoreForm = String.format(Locale.getDefault(), "%010d", points);
-        System.out.println(scoreForm);
         g.drawString(scoreForm, 20, 40);
     }
 

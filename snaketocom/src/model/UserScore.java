@@ -27,4 +27,12 @@ public class UserScore implements Comparable<UserScore> {
 	public int compareTo(UserScore us) {
 		return us.getScore().getPoints() - score.getPoints();  
 	}
+
+
+	@Override
+	public String toString() {
+		return "name=" + name + ", score=" + score;
+	}
+	
+	
 }

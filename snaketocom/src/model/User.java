@@ -9,12 +9,14 @@ public class User {
 	private String name;
 	private String password;
 	private List<Score> scores;
+	private List<Score> provisionalScores;
 	
 	public User() {}
 	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
 	    this.scores = new ArrayList<>();
+	    this.provisionalScores = new ArrayList<>();
 	}
 	
 	public User(String name, List scores) {
@@ -54,6 +56,14 @@ public class User {
 	
 	public void addNewScore(Score score) {
 		this.scores.add(score);
+	}
+	
+	public void addNewProvisionalScore(Score score) {
+		this.provisionalScores.add(score);
+	}
+	
+	public List<Score> getProvisionalScores(){
+		return provisionalScores;
 	}
 	
 	public Score getBestScore() {
