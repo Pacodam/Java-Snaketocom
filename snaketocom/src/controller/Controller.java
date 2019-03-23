@@ -22,6 +22,7 @@ import model.Score;
 import model.User;
 import model.UserScore;
 import persistence.InputOutputXML;
+import persistence.JDomMethods;
 import view.ConsoleView;
 import view.LoginView;
 import view.MenuView;
@@ -135,7 +136,9 @@ public class Controller {
 	  */
 	 public void switchToMenu() throws SnakeExceptions {
 		if(userLogged == null) {
-			throw new SnakeExceptions(SnakeExceptions.MENU_NOT_ALLOWED);
+			JOptionPane.showMessageDialog(null, "Menu option requires a login", "Info", JOptionPane.INFORMATION_MESSAGE);
+			return;
+			//throw new SnakeExceptions(SnakeExceptions.MENU_NOT_ALLOWED);
 		}
 		
 		 view.setMenu(menu);
@@ -313,7 +316,7 @@ public class Controller {
 	 
 	 public void saveScores() {
 		 System.out.println("saveee");
-		 //InputOutputXML.saveScores(userLogged);
+		 JDomMethods.saveScores(userLogged);
 	 }
 	 
 	 
