@@ -161,6 +161,7 @@ public class InputOutputXML {
 		return users; 
 	 }
 	 
+	 /*
 	 public static void saveScores(User userLogged) {
 		 try {
 	            //initialization of DocumentBuilderFactory, Document and Node root
@@ -196,7 +197,8 @@ public class InputOutputXML {
 	            root.appendChild(n);
 	            
 	          }
-	            
+	         
+	          /*
 	            //Save of modified dom into xml file
 	            OutputFormat format = new OutputFormat(doc);
 	            format.setIndenting(true);
@@ -253,13 +255,13 @@ public class InputOutputXML {
 	     * @param element name of element node
 	     * @param text content of text node of element
 	     * @return 
-	     */
+	     
 	    public static Node createNode(String element, String text) {
 	        Node node = doc.createElement(element);
 	        Node textNode = doc.createTextNode(text);
 	        node.appendChild(textNode);
 	        return node;
-	    }
+	    } */
 	    
 	 
 	

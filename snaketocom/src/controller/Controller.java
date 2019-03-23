@@ -313,7 +313,7 @@ public class Controller {
 	 
 	 public void saveScores() {
 		 System.out.println("saveee");
-		 InputOutputXML.saveScores(userLogged);
+		 //InputOutputXML.saveScores(userLogged);
 	 }
 	 
 	 
